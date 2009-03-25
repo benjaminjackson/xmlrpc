@@ -261,11 +261,10 @@
 }
 
 - (NSString *)encodeDate: (NSDate *)date {
-    unsigned components = kCFCalendarUnitYear | kCFCalendarUnitMonth | kCFCalendarUnitDay | kCFCalendarUnitHour | kCFCalendarUnitMinute | kCFCalendarUnitSecond;
-    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components: components fromDate: date];
-    NSString *buffer = [NSString stringWithFormat: @"%.4d%.2d%.2dT%.2d:%.2d:%.2d", [dateComponents year], [dateComponents month], [dateComponents day], [dateComponents hour], [dateComponents minute], [dateComponents second], nil];
-    
-    return [self valueTag: @"dateTime.iso8601" value: buffer];
+	NSString *buffer = [date descriptionWithCalendarFormat: @"%Y%m%dT%H:%M:%SZ"
+		timeZone: [NSTimeZone timeZoneWithAbbreviation:@"GMT"] locale: nil];
+
+	return [self valueTag: @"dateTime.iso8601" value: buffer];
 }
 
 - (NSString *)encodeData: (NSData *)data {
