@@ -260,7 +260,7 @@
                 break;
             case XMLRPCEventBasedParserElementTypeString:
                 myElementValue = [self parseString: (NSString *)previousElementValue];
-                
+                if (myElementValue == NULL) { myElementValue = @""; }
                 [previousElementValue release];
                 
                 break;
@@ -278,6 +278,10 @@
                 break;
             default:
                 break;
+        }
+        if(myElementValue == NULL)
+        {
+          [NSException raise:@"Bad input data" format:@"Data for key %@ is invalid", elementName];
         }
         
         [self addValueToParent];
