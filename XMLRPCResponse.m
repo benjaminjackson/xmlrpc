@@ -43,12 +43,13 @@
         XMLRPCEventBasedParser *parser = [[XMLRPCEventBasedParser alloc] initWithData: data];
         
         if (!parser) {
-            return nil;
+          NSLog(@"%s XML Parsing failed for the following input:", _cmd);
+          NSLog(@"%s %@", _cmd, [[NSString alloc] initWithData: data encoding: NSISOLatin1StringEncoding]);
+          return nil;
         }
     
         myBody = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
         myObject = [[parser parse] retain];
-        
         isFault = [parser isFault];
         
         [parser release];
