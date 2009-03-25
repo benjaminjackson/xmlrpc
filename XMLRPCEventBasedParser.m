@@ -111,10 +111,6 @@
     if (self = [super init]) {
         myParser = nil;
         
-        myDateFormatter = [[NSDateFormatter alloc] init];
-        
-        [myDateFormatter setDateFormat: @"yyyyMMdd'T'HH:mm:ss"];
-        
         myParent = nil;
         myElementType = XMLRPCEventBasedParserElementTypeError;
         myElementKey = nil;
@@ -173,7 +169,6 @@
 
 - (void)dealloc {
     [myParser release];
-    [myDateFormatter release];
     [myParent release];
     [myElementKey release];
     [myElementValue release];
@@ -440,7 +435,10 @@
 }
 
 - (NSDate *)parseDate: (NSString *)value {
-    return [myDateFormatter dateFromString: value];
+  value = [[value componentsSeparatedByString: @"Z"] componentsJoinedByString: @""];
+  value = [[value componentsSeparatedByString: @"-"] componentsJoinedByString: @""];
+  NSCalendarDate *date = [NSCalendarDate dateWithString: value calendarFormat: @"%Y%M%dT%H:%M:%S" locale: nil];
+  return date;
 }
 
 - (NSData *)parseData: (NSString *)value {
