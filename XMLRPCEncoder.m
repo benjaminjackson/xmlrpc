@@ -92,9 +92,9 @@
         id parameter = nil;
         
         while (parameter = [enumerator nextObject]) {
-            [buffer appendString: @"<param>"];
+            [buffer appendString: @"\n<param>\n"];
             [buffer appendString: [self encodeObject: parameter]];
-            [buffer appendString: @"</param>"];
+            [buffer appendString: @"\n</param>"];
         }
     }
     
