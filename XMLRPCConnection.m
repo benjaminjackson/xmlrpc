@@ -170,6 +170,16 @@
 - (void)connectionDidFinishLoading: (NSURLConnection *)connection {
     if (myData && ([myData length] > 0)) {
         XMLRPCResponse *response = [[[XMLRPCResponse alloc] initWithData: myData] autorelease];
+        
+        if(response == nil && [myDelegate respondsToSelector: @selector(connection:didFailWithError:)])
+        {
+          NSString *responseString = [[[NSString alloc] initWithData: myData encoding: NSISOLatin1StringEncoding] autorelease];
+          NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:responseString, @"responseString", @"The server returned invalid XML.", @"error", nil];
+          NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:500 userInfo:dict];
+          [myDelegate connection:self didFailWithError:error];
+          return nil;
+        }
+        
         XMLRPCRequest *request = [[myRequest retain] autorelease];
         
         NSLog(@"The connection, %@, received a response!", myIdentifier);
