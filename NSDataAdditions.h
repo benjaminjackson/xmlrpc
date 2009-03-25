@@ -28,6 +28,7 @@
 // Copyright (c) 2009 Divisible by Zero.
 // 
 
+#import <Foundation/Foundation.h>
 #import <Foundation/NSData.h>
 
 @class NSString;
