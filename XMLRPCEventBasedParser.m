@@ -437,7 +437,7 @@
 - (NSDate *)parseDate: (NSString *)value {
   value = [[value componentsSeparatedByString: @"Z"] componentsJoinedByString: @""];
   value = [[value componentsSeparatedByString: @"-"] componentsJoinedByString: @""];
-  NSCalendarDate *date = [NSCalendarDate dateWithString: value calendarFormat: @"%Y%M%dT%H:%M:%S" locale: nil];
+  NSCalendarDate *date = [NSCalendarDate dateWithString: value calendarFormat: @"%Y%m%dT%H:%M:%S" locale: nil];
   return date;
 }
 
